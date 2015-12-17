@@ -12,7 +12,7 @@ file_name = file_path.split("/")[-1]
 print file_name
 
 def tweet_iter():
-    with open(file_path) as f:
+    with gzip.open(file_path) as f:
         for line in f:
             j = json.loads(line.strip())
             yield  j[u"text"]    
