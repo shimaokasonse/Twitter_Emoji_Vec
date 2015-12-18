@@ -121,9 +121,9 @@ def split_sent(sentence):
                         for m in c.morphs:
                             if m.pos in ["動詞","形容詞","名詞"]:
                                 if m.base == "*":
-                                    word_list.append(m.surface)
+                                    word_list.append(m.surface.encode("utf-8"))
                                 else:
-                                    word_list.append(m.base)
+                                    word_list.append(m.base.encode("utf-8"))
                 except:
                     pass
         return emoji_list, word_list
@@ -150,6 +150,14 @@ while True:
                 update_emoji_with_emoji(e1,e2)
         for e, w in itertools.product(emoji_list,word_list):
              update_emoji_with_word(e,w)
+    if i % 10000 == 0:
+        data = {"emoji_with_emoji":emoji_with_emoji,
+                "emoji_with_word":emoji_with_word,
+                "emoji_freq":emoji_freq,
+                "word_freq":word_freq}
+
+        with open(file_name + str(i) + ".result.json", 'w') as f:
+                json.dump(data, f)
     
 data = {"emoji_with_emoji":emoji_with_emoji,
         "emoji_with_word":emoji_with_word,
